@@ -2,15 +2,20 @@
 package INF;
 
 import Codes.DBconnect;
+import com.mysql.cj.protocol.Resultset;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 public class MainFrame extends javax.swing.JFrame {
     
     Connection conn=null;
     PreparedStatement pst=null;
+    Resultset rs=null;
+    
 
     /**
      * Creates new form MainFrame
@@ -18,6 +23,18 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         conn = DBconnect.connection();
+        tableload();
+    }
+    public void tableload(){
+        
+        try {
+            String sql = "SELECT ID,S_Name,S_Age,S_Grade FROM student";
+            pst=conn.prepareStatement(sql);
+            rs=(Resultset) pst.executeQuery();
+            jTable1.setModel(DbUtils.resultSetToTableModel((ResultSet) rs));
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
 
     /**
@@ -233,6 +250,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,e);
         }
+        tableload();
     }//GEN-LAST:event_btnInsertActionPerformed
 
     /**
