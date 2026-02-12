@@ -1,20 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package INF;
 
-/**
- *
- * @author user
- */
+import Codes.DBconnect;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 public class MainFrame extends javax.swing.JFrame {
+    
+    Connection conn=null;
+    PreparedStatement pst=null;
 
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
+        conn = DBconnect.connection();
     }
 
     /**
@@ -134,6 +137,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         btnInsert.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnInsert.setText("Insert");
+        btnInsert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertActionPerformed(evt);
+            }
+        });
 
         btnUpdate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnUpdate.setText("Update");
@@ -207,6 +215,26 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
+        
+        String name;
+        int age;
+        int grade;
+        
+        name=NameBox.getText();
+        age=Integer.parseInt(AgeBox.getText());
+        grade=Integer.parseInt(GradeComboBox.getSelectedItem().toString());
+        
+        try {
+            String sql = "INSERT INTO student(S_Name,S_Age,S_Grade) VALUES ('"+name+"','"+age+"','"+grade+"')";
+            pst=conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null,"INSERTED That files to Database");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }//GEN-LAST:event_btnInsertActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -235,10 +263,8 @@ public class MainFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainFrame().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MainFrame().setVisible(true);
         });
     }
 
