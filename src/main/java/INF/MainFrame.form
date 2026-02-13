@@ -91,6 +91,9 @@
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JTextField" name="SearchBox">
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="SearchBoxKeyReleased"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

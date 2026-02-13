@@ -50,6 +50,22 @@ public class MainFrame extends javax.swing.JFrame {
         AgeBox.setText(age);
         GradeComboBox.setSelectedItem(grade);
     }
+    
+    public void search(){
+        
+        String srch=SearchBox.getText();
+        
+        try {
+            
+            String sql="SELECT * from student WHERE S_Name LIKE'%"+srch+"%' OR ID LIKE '%"+srch+"%'";
+            pst=conn.prepareStatement(sql);
+            rs=(Resultset) pst.executeQuery();
+            jTable1.setModel(DbUtils.resultSetToTableModel((ResultSet) rs));
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -92,6 +108,12 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(51, 255, 51));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Search", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+
+        SearchBox.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                SearchBoxKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -285,6 +307,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
        tabledata();
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void SearchBoxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SearchBoxKeyReleased
+        search();
+    }//GEN-LAST:event_SearchBoxKeyReleased
 
     /**
      * @param args the command line arguments
