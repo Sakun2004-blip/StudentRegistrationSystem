@@ -36,6 +36,20 @@ public class MainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    public void tabledata(){
+        
+        int r=jTable1.getSelectedRow();
+        
+        String id=jTable1.getValueAt(r, 0).toString();
+        String name=jTable1.getValueAt(r,1).toString();
+        String age=jTable1.getValueAt(r,2).toString();
+        String grade=jTable1.getValueAt(r,3).toString();
+        
+        IDbox.setText(id);
+        NameBox.setText(name);
+        AgeBox.setText(age);
+        GradeComboBox.setSelectedItem(grade);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,6 +77,8 @@ public class MainFrame extends javax.swing.JFrame {
         btnDelete = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        IDbox = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -145,10 +161,10 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(GradeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
-        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 340, 200));
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 340, 190));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 51));
 
@@ -209,6 +225,14 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 320, 170));
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setText("ID");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 30, -1));
+
+        IDbox.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        IDbox.setText("ID");
+        jPanel2.add(IDbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, -1, -1));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 600));
 
         jTable1.setBackground(new java.awt.Color(102, 255, 255));
@@ -223,6 +247,11 @@ public class MainFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 0, 620, 230));
@@ -252,6 +281,10 @@ public class MainFrame extends javax.swing.JFrame {
         }
         tableload();
     }//GEN-LAST:event_btnInsertActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+       tabledata();
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -289,6 +322,7 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField AgeBox;
     private javax.swing.JComboBox<String> GradeComboBox;
+    private javax.swing.JLabel IDbox;
     private javax.swing.JTextField NameBox;
     private javax.swing.JTextField SearchBox;
     private javax.swing.JButton btnClear;
@@ -299,6 +333,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
