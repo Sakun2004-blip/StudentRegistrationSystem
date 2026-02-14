@@ -28,7 +28,7 @@ public class MainFrame extends javax.swing.JFrame {
     public void tableload(){
         
         try {
-            String sql = "SELECT ID,S_Name,S_Age,S_Grade FROM student";
+            String sql = "SELECT ID,S_Name AS NAME,S_Age AS AGE,S_Grade AS GRADE FROM student";
             pst=conn.prepareStatement(sql);
             rs=(Resultset) pst.executeQuery();
             jTable1.setModel(DbUtils.resultSetToTableModel((ResultSet) rs));
@@ -83,6 +83,14 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
+    }
+    
+    public void clear(){
+        
+        SearchBox.setText("");
+        NameBox.setText("");
+        AgeBox.setText("");
+        GradeComboBox.setSelectedIndex(0);
     }
 
     /**
@@ -226,12 +234,27 @@ public class MainFrame extends javax.swing.JFrame {
 
         btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("Exit");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -339,6 +362,32 @@ public class MainFrame extends javax.swing.JFrame {
         update();
         tableload();
     }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+       int check=JOptionPane.showConfirmDialog(null, "Do you want to delete!");
+       
+       if(check==0){
+           String id=IDbox.getText();
+           try {
+               String sql="DELETE FROM student WHERE ID='"+id+"'";
+               pst=conn.prepareStatement(sql);
+               pst.execute();
+               JOptionPane.showMessageDialog(null, "Deleted");
+               
+           } catch (Exception e) {
+               JOptionPane.showMessageDialog(null, e);
+           }
+       }
+       tableload();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        clear();
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
