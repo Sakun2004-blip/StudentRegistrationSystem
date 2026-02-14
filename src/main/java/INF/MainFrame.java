@@ -66,6 +66,24 @@ public class MainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    
+    public void update(){
+        
+        String id=IDbox.getText();
+        String name=NameBox.getText();
+        String age=AgeBox.getText();
+        String grade=GradeComboBox.getSelectedItem().toString();
+        
+        try {
+            String sql="UPDATE student set S_Name='"+name+"',S_Age='"+age+"',S_Grade='"+grade+"' WHERE ID='"+id+"'";
+            pst=conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Updated");
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -200,6 +218,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         btnUpdate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDelete.setText("Delete");
@@ -311,6 +334,11 @@ public class MainFrame extends javax.swing.JFrame {
     private void SearchBoxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SearchBoxKeyReleased
         search();
     }//GEN-LAST:event_SearchBoxKeyReleased
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        update();
+        tableload();
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
     /**
      * @param args the command line arguments
